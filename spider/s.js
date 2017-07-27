@@ -72,18 +72,18 @@ function getBooks(type, url, pageCount) {
                             getBookData(baseUrl, page + 1, pageCount)
                         }
                         else {
-                            //console.log(books)
+                            // console.log(books)
                             // fs.writeFileSync(`./data/book_${type}.json`, JSON.stringify(books))
-                            // console.log(`写入文件完成...book_${type}.json`)
+                            console.log(`写入文件完成...book_${type}.json`)
                             // 此处把数据写入数据库
-                            // books.forEach(book=>{
-                            //     var model = new Book(book)
-                            //     model.save().then(()=>{
-                            //         console.log(`保存<<${book.title}>>成功`)
-                            //     }).catch(err=>{
-                            //         console.log(err)
-                            //     })
-                            // })
+                            books.forEach(book=>{
+                                var model = new Book(book)
+                                model.save().then(()=>{
+                                    console.log(`保存<<${book.title}>>成功`)
+                                }).catch(err=>{
+                                    console.log(err)
+                                })
+                            })
                         }
                     }
                     done();

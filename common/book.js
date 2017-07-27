@@ -14,7 +14,7 @@ var bookSchema = new Schema({
         default:0
     },//价格
     type:String//分类
-})
+}, { toJSON: { virtuals: true } })
 // 通过virtual创建虚拟链接
 bookSchema.virtual('book_type',{
     ref:"book_type",

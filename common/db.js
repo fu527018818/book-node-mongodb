@@ -46,7 +46,7 @@ db_book_type.getData = function(searchName,callback){
 db_book_type.save = function(model,callback){
     var data = new BookType(model)
     data.save()
-        .then(callback(true))
+        .then(callback(true,data))
         .catch(err=>{
             console.log(err)
             callback(false)
@@ -169,7 +169,7 @@ db_book.getData = function(searchName,callback){
 db_book.save = function(model,callback){
     var data = new Book(model)
     data.save()
-        .then(callback(true))
+        .then(callback(true,data))
         .catch(err=>{
             console.log(err)
             callback(false)

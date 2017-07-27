@@ -9,10 +9,11 @@ var dalBookType = new BookTypeDal()
 router.get('/types',(req,res)=>{
 	//查询所有的分类信息 把数据展示在页面上
 	dalBookType.getData({},data=>{
+        console.log(data)
+        // res.json(data)
 		res.render('books/book_types',{types:data})
 	})
 })
-
 //根据分类获取当前分类下的所有数据
 router.get('/list/:type',(req,res)=>{
 	dalBook.getData({type:req.params.type},books=>{

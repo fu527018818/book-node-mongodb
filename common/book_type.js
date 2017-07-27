@@ -9,7 +9,8 @@ var bookTypeSchema = new Schema({
     code:String,
     url:String,
     page_count:Number
-})
+}, { toJSON: { virtuals: true } })
+
 var BookType = mongoose.model("book_type",bookTypeSchema)
 
 /**

@@ -11,8 +11,9 @@ var dalBookType = new BookTypeDal()
 
 // :page? 可选参数page用于记录当前显示哪一页的数据
 router.get('/list/:page?',(req,res)=>{
-	// var searchName = ""
+
 	var filter = {}
+
 	if(req.query.bookName){
 		var searchName = req.query.bookName //获取查询条件
 		filter.title = new RegExp(searchName,"i")
@@ -24,12 +25,7 @@ router.get('/list/:page?',(req,res)=>{
 	}
 
 	dalBook.getDataByPage(page,filter,data=>{
-		// console.log(data)
 		var arrPages = global.tools.getPagesArr(page,data.pageCount) //生成分页页码数组
-		// for(var i=1;i<=data.pageCount;i++){
-		// 	arrPages.push(i)
-		// }
-		// console.log(arrPages)
 		res.render('admin/book/list',{
 			list:data.res,
 			pages:arrPages, //页面中显示的分页页码
@@ -38,11 +34,6 @@ router.get('/list/:page?',(req,res)=>{
 			query:req.query
 		})
 	})
-
-	// dalBook.getData(searchName,data=>{
-	// 	// console.log(data[0].book_type)
-	// 	res.render('admin/book/list',{list:data,query:req.query})
-	// })
 })
 
 // 新增页面

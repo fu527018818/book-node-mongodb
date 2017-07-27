@@ -6,8 +6,8 @@ var m = {}
  * @return {[type]}           [description]
  */
 m.getPagesArr = function(page,pageCount){
-	page = Number(page)
-	pageCount = Number(pageCount)
+	page = Number(page) //当前页数
+	pageCount = Number(pageCount)  //总页数
 	var pageLength = 15 //指定页面显示的总长度
 	// var pageCount =  //总页数
 	// var page = 198 //当前页码

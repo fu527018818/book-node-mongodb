@@ -45,6 +45,13 @@ class UserDal extends DBBase{
             console.log(err)
         })
     }
+    /**
+     * 用户登录处理
+     * @param  {[type]}   mobile   [手机号]
+     * @param  {Function} callback [返回Obejct对象{isOk,user:xx}]
+     * @return {[type]}            [description]
+     */
+
 }
 
 module.exports = {

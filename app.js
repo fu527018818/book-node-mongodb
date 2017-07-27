@@ -8,8 +8,21 @@ global.tools = require('./common/tools')
 
 var app = express()
 
-app.use(log('dev')) //终端日志输出
+var fs = require('fs')
+////https请求--->
+var http = require('http')
+var https = require('https')
+var privateKey  = fs.readFileSync('./crt/private.pem', 'utf8')
+var certificate = fs.readFileSync('./crt/file.crt', 'utf8')
+var credentials = {key: privateKey, cert: certificate}
 
+var httpServer = http.createServer(app)
+var httpsServer = https.createServer(credentials, app)
+var PORT = 2900
+var SSLPORT = 2901
+
+
+app.use(log('dev')) //终端日志输出
 app.use(cookieParser()) //使用cookie-parser中间件
 
 // parse application/x-www-form-urlencoded
@@ -92,10 +105,45 @@ app.use('/admin/book_type',require('./routes/admin/book_type_controller'))
 app.use('/admin/users',require('./routes/admin/users_controller'))
 
 //引入前台用户部分
+app.all('/*',(req,res,next)=>{
+	console.log('bbb')
+	res.header("Access-Control-Allow-Origin","*")
+	res.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type");
+	res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+	res.header("Content-Type", "application/json;charset=utf-8");
+	next()
+})
 app.use('/',require('./routes/users'))
 app.use('/books',require('./routes/books'))
 
-
-app.listen('3000',()=>{
-	console.log('服务器运行于3000端口...')
+app.all('/api/*',(req,res,next)=>{
+	res.header("Access-Control-Allow-Origin","*")
+	res.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type");
+	res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+	res.header("Content-Type", "application/json;charset=utf-8");
+	next()
 })
+app.use('/api/v1/books',require('./routes/api/v1/books'))
+
+app.all('/common/*',(req,res,next)=>{
+	res.header("Access-Control-Allow-Origin","*")
+	res.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type");
+	res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+	res.header("Content-Type", "application/json;charset=utf-8");
+	next()
+})
+app.use('/common',require('./routes/common/common'))
+
+app.use('/api/v1/food_type',require('./routes/api/v1/food_type'))
+app.use('/api/v1/food' , require('./routes/api/v1/food'))
+
+
+// app.listen('2900',()=>{
+// 	console.log('服务器运行于3000端口...')
+// })
+httpServer.listen(PORT, function() {
+    console.log('HTTP Server is running on: http://localhost:%s', PORT);
+});
+httpsServer.listen(SSLPORT, function() {
+    console.log('HTTPS Server is running on: https://localhost:%s', SSLPORT);
+});

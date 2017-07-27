@@ -19,7 +19,7 @@ class DBBase{
      * @return {[type]}            [description]
      */
     getDataByPage(page,filter,callback){
-        var pageSize = 3 //每页显示的数量
+        var pageSize = 8 //每页显示的数量
         this.model.count(filter) //统计记录数量
             .then(count=>{
                 // console.log(count)
@@ -71,7 +71,7 @@ class DBBase{
     save(m,callback){
         var data = new this.model(m)
         data.save()
-            .then(callback(true))
+            .then(callback(true,data))
             .catch(err=>{
                 console.log(err)
             })
